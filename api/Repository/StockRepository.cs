@@ -1,5 +1,6 @@
 using api.Data;
 using api.Dto.Stock;
+using api.Helpers;
 using api.Interface;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -36,10 +37,40 @@ namespace api.Repository
         }
 
         //Repository Pattern as it takes in the abstract method and allows it flexibility to morph into various values
-        public async Task<List<Stock>> GetAllStockAsync()
+        public async Task<List<Stock>> GetAllStockAsync(QueryObject queryObject)
         {
             //SELECT * FROM Stocks INNNER JOIN Comments WHERE Stocks.StockId = Comments.StockId
-            return await _dbContext.Stocks.Include(s => s.Comments).ToListAsync();
+            var stocks = _dbContext.Stocks.Include(s => s.Comments).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryObject.Symbol))
+            {
+                stocks = stocks.Where(s => s.Symbol.Contains(queryObject.Symbol));
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryObject.CompanyName))
+            {
+                stocks = stocks.Where(s => s.CompanyName.Contains(queryObject.CompanyName));
+            }
+
+            if (!string.IsNullOrWhiteSpace(queryObject.SortBy))
+            {
+                if (queryObject.SortBy.Equals("Symbol", StringComparison.OrdinalIgnoreCase))
+                {
+                    stocks = (queryObject.IsDescending == false ? stocks.OrderByDescending(x => x.Symbol) : stocks.OrderBy(x => x.Symbol));
+                }
+                else if (queryObject.SortBy.Equals("CompanyName", StringComparison.OrdinalIgnoreCase))
+                {
+                    stocks = (queryObject.IsDescending == false ? stocks.OrderByDescending(x => x.CompanyName) : stocks.OrderBy(x => x.CompanyName));
+                }
+                else if (queryObject.SortBy.Equals("Industry", StringComparison.OrdinalIgnoreCase))
+                {
+                    stocks = (queryObject.IsDescending == false ? stocks.OrderByDescending(x => x.Industry) : stocks.OrderBy(x => x.Industry));
+                }
+
+
+            }
+
+            return await stocks.ToListAsync();
         }
 
         public async Task<Stock?> GetSingleStockAsync(int stockID)
