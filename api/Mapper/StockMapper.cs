@@ -4,6 +4,11 @@ using api.Models;
 
 namespace api.Mapper
 {
+    /// <summary>
+    /// This can be done using the AutoMapper extension 
+    /// More of a java approach
+    /// Used to transfer data from Source (Stock) to destination (StockDto)
+    /// </summary>
     public static class StockMapper
     {
 

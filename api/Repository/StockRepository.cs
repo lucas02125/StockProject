@@ -66,11 +66,12 @@ namespace api.Repository
                 {
                     stocks = (queryObject.IsDescending == false ? stocks.OrderByDescending(x => x.Industry) : stocks.OrderBy(x => x.Industry));
                 }
-
-
             }
 
-            return await stocks.ToListAsync();
+            var skipNumber = (queryObject.PageNumber - 1) * queryObject.SkipNumber;
+
+            //Following below is pagitation
+            return await stocks.Skip(skipNumber).Take(queryObject.SkipNumber).ToListAsync();
         }
 
         public async Task<Stock?> GetSingleStockAsync(int stockID)
