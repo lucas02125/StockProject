@@ -1,27 +1,35 @@
 //tsrafce
-import React from "react";
+import React, { SyntheticEvent } from "react";
+import { CompanySearch } from "../../company";
+import AddPortfolio from "../Portfolio/AddPortfolio/AddPortfolio";
 
 type Props = {
-  companyName: string;
-  ticker: string;
-  price: number;
+  id: string;
+  searchResult: CompanySearch;
+  OnSubmitPortfolio: (e: SyntheticEvent) => void;
 };
 
 const Card: React.FC<Props> = ({
-  companyName,
-  ticker,
-  price,
+  id,
+  searchResult,
+  OnSubmitPortfolio,
 }: Props): JSX.Element => {
   return (
     <div className="Card">
-      <img src="logo192.png" alt="image" />
+      <img alt="company logo" />
       <div className="details">
         <h2>
-          {companyName} ({ticker})
+          {searchResult.name} ({searchResult.symbol})
         </h2>
-        <p>{price}$</p>
+        <p>{searchResult.currency}</p>
       </div>
-      <p className="infon">Testing this classname out for the craic</p>
+      <p className="infon">
+        {searchResult.exchangeShortName} - {searchResult.stockExchange}
+      </p>
+      <AddPortfolio
+        OnSubmitPortfolio={OnSubmitPortfolio}
+        symbol={searchResult.symbol}
+      />
     </div>
   );
 };

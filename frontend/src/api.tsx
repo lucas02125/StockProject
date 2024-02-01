@@ -5,10 +5,10 @@ interface SearchResponce {
   data: CompanySearch[] | string;
 }
 
-export const searchCompanies = async () => {
+export const searchCompanies = async (queryString: string) => {
   try {
     const data = await axios.get<SearchResponce>(
-      "https://financialmodelingprep.com/api/v3/search-name?query=META&limit=10&exchange=NASDAQ&apikey=kHQtMKuS1yWGeD0GmYCvS8uoTtRlEhaJ"
+      `https://financialmodelingprep.com/api/v3/search-name?query=${queryString}&limit=10&exchange=NASDAQ&apikey=kHQtMKuS1yWGeD0GmYCvS8uoTtRlEhaJ`
     );
     return data;
   } catch (e) {

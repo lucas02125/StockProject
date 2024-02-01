@@ -8,7 +8,7 @@ import { searchCompanies } from "./api";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-console.log(searchCompanies());
+//console.log(searchCompanies("tesla"));
 root.render(
   <React.StrictMode>
     <App />
