@@ -8,7 +8,7 @@ const Table = ({ config, data }: Props) => {
     return (
       <tr key={company.cik}>
         {config.map((val: any) => {
-          <td className="p-3">{val.render(company)}</td>;
+          return <td className="p-3">{val.render(company)}</td>;
         })}
       </tr>
     );

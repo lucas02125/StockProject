@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CompanyCashFlow } from "../../company";
+import { useOutletContext } from "react-router";
+import { getCashFlowBalance } from "../../api";
+import Table from "../Table/Table";
 
 type Props = {};
 
@@ -41,7 +44,28 @@ const config = [
 ];
 
 const CashflowStatement = (props: Props) => {
-  return <div>CashflowStatement</div>;
+  const ticker = useOutletContext<string>();
+  const [cashFlowers, setCashFlowStatement] = useState<CompanyCashFlow[]>();
+
+  useEffect(() => {
+    const cashFlowBalanceFetch = async () => {
+      const result = await getCashFlowBalance(ticker!);
+      setCashFlowStatement(result!.data);
+    };
+    cashFlowBalanceFetch();
+  }, []);
+
+  return (
+    <>
+      {cashFlowers ? (
+        <>
+          <Table config={config} data={cashFlowers} />
+        </>
+      ) : (
+        <h2>No results</h2>
+      )}
+    </>
+  );
 };
 
 export default CashflowStatement;

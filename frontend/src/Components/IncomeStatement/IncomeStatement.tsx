@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Interface } from "readline";
 import { CompanyIncomeStatement } from "../../company";
-import { useOutletContext } from "react-router";
+import { useOutletContext } from "react-router-dom";
 import { getIncomeMetrics } from "../../api";
 import RatioList from "../RatioList/RatioList";
 import Table from "../Table/Table";
@@ -70,11 +70,11 @@ const IncomeStatement = (props: Props) => {
     useState<CompanyIncomeStatement[]>();
 
   useEffect(() => {
-    const incomeStatement = async () => {
+    const incomeStatementFetch = async () => {
       const result = await getIncomeMetrics(ticker!);
       setIncomeStatement(result!.data);
     };
-    incomeStatement();
+    incomeStatementFetch();
   }, []);
 
   return (
