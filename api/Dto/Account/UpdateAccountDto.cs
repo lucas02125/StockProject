@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace api.Dto
+namespace api.Dto.Account
 {
 
     public class UpdateAccountDto

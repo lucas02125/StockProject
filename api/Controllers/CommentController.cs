@@ -7,6 +7,9 @@ using api.Dto;
 
 namespace api.Controllers
 {
+
+    //API controllers are compared to doors to a house, they are mainly the first entry point into things, 
+    //Handle the http request coming in from the client
     [ApiController]
     [Route("api/comment")]
     public class CommentController : ControllerBase
