@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-
-
     [ApiController]
     [Route("api/stock")]
     public class StockController : ControllerBase

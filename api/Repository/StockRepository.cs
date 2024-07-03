@@ -11,6 +11,7 @@ namespace api.Repository
     {
         //Dependency Injection
         private readonly ApplicationDBContext _dbContext;
+        private readonly List<Stock> _stocks = new List<Stock>();
         public StockRepository(ApplicationDBContext applicationDBContext)
         {
             _dbContext = applicationDBContext;
