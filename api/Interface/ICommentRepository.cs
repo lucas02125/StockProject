@@ -1,11 +1,12 @@
 using api.Dto;
+using api.Helpers;
 using api.Models;
 
 namespace api.Interface
 {
     public interface ICommentRepository
     {
-        public Task<List<Comment>> GetAllCommentsAsync();
+        public Task<List<Comment>> GetAllCommentsAsync(CommentQueryObject queryObject);
 
         public Task<Comment?> GetCommentByIDAsync(int id);
 

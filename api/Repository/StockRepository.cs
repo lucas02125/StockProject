@@ -41,7 +41,7 @@ namespace api.Repository
         public async Task<List<Stock>> GetAllStockAsync(QueryObject queryObject)
         {
             //SELECT * FROM Stocks INNNER JOIN Comments WHERE Stocks.StockId = Comments.StockId
-            var stocks = _dbContext.Stocks.Include(s => s.Comments).AsQueryable();
+            var stocks = _dbContext.Stocks.Include(s => s.Comments).ThenInclude(a => a.AppUser).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(queryObject.Symbol))
             {
@@ -83,6 +83,11 @@ namespace api.Repository
                 return null;
             }
             return singleStock;
+        }
+
+        public async Task<Stock?> GetStockBySymbolAsync(string symbol)
+        {
+            return await _dbContext.Stocks.FirstOrDefaultAsync(s => s.Symbol == symbol);
         }
 
         public async Task<bool> StockExist(int stockID)

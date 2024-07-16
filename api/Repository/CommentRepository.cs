@@ -1,5 +1,6 @@
 using api.Data;
 using api.Dto;
+using api.Helpers;
 using api.Interface;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -21,14 +22,14 @@ namespace api.Repository
             return commentEntity;
         }
 
-        public async Task<List<Comment>> GetAllCommentsAsync()
+        public async Task<List<Comment>> GetAllCommentsAsync(CommentQueryObject queryObject)
         {
-            return await _commentContext.Comments.ToListAsync();
+            return await _commentContext.Comments.Include(a => a.AppUser).ToListAsync();
         }
 
         public async Task<Comment?> GetCommentByIDAsync(int id)
         {
-            var commentFound = await _commentContext.Comments.FirstOrDefaultAsync(c => c.CommentID == id);
+            var commentFound = await _commentContext.Comments.Include(a => a.AppUser).FirstOrDefaultAsync(c => c.CommentID == id);
             if (commentFound == null)
             {
                 return null;

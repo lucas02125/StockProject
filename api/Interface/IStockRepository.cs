@@ -12,5 +12,6 @@ namespace api.Interface
         public Task<Stock?> UpdateTheStockAsync(int stockId, UpdateStockDto stockDto);
         public Task<Stock?> DeleteStockAsync(int stockID);
         public Task<bool> StockExist(int stockID);
+        public Task<Stock?> GetStockBySymbolAsync(string symbol);
     }
 }
