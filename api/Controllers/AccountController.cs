@@ -36,7 +36,7 @@ namespace api.Controllers
             if (foundUser != null)
             {
                 var result = await _signInManager.CheckPasswordSignInAsync(foundUser, loginDto.Password, false);
-                if (!result.Succeeded)
+                if (result.Succeeded)
                 {
                     return Ok(new NewUserDto
                     {
