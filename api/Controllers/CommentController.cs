@@ -32,7 +32,8 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllComments(CommentQueryObject queryObject)
+        [Authorize]
+        public async Task<IActionResult> GetAllComments([FromQuery] CommentQueryObject queryObject)
         {
             var comments = await _commentRepo.GetAllCommentsAsync(queryObject);
 
@@ -56,7 +57,7 @@ namespace api.Controllers
             return Ok(foundComment);
         }
 
-        [HttpPost("{symbol:alpha}")]
+        [HttpPost("{symbol}")]
         [Authorize]
         public async Task<IActionResult> CreateComment([FromRoute] string symbol, [FromBody] CreateCommentDto createComment)
         {
@@ -115,7 +116,7 @@ namespace api.Controllers
                 return BadRequest("Comment does not exist you fool");
             }
 
-            return await GetAllComments();
+            return Ok(commentToRemove);
         }
 
     }
